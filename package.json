@@ -71,9 +71,11 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "eslint": "eslint .",
-    "eslint:fix": "eslint --fix ."
+    "test": "node scripts/test.js --watchAll=false",
+    "test:watch": "node scripts/test.js --watchAll",
+    "test:update-snapshot": "jest --watchAll=false --updateSnapshot",
+    "eslint": "eslint . --ext .js,.jsx",
+    "eslint-fix": "eslint --fix . --ext .js,.jsx"
   },
   "browserslist": {
     "production": [

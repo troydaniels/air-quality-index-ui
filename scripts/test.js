@@ -47,4 +47,6 @@ if (
   argv.push(hasSourceControl ? '--watch' : '--watchAll')
 }
 
+argv.push('--passWithNoTests');
+
 jest.run(argv)
