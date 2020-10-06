@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React from 'react'
-import * as R from 'ramda'
-import 'tachyons'
+import React from 'react';
+import * as R from 'ramda';
+import 'tachyons';
 
 const App = ({
   feed,
@@ -20,13 +20,13 @@ const App = ({
         <form
           className="flex"
           onSubmit={(event) => {
-            event.preventDefault()
+            event.preventDefault();
             fetch(
               `http://api.waqi.info/search/?keyword=${search}&token=8d8e978e647d2b0a8c17c04ba331c0117cd06dc8`
             )
               .then(R.invoker(0, 'json'))
               .then(R.prop('data'))
-              .then(setSearchData)
+              .then(setSearchData);
           }}
         >
           <div className="w5 flex items-center">
@@ -96,26 +96,26 @@ const App = ({
       )}
     </div>
   </div>
-)
+);
 
 const withState = (name, setName, initialState) => (Component) => {
-  const factory = React.createFactory(Component)
+  const factory = React.createFactory(Component);
   class WithState extends React.Component {
-    state = { [name]: initialState }
+    state = { [name]: initialState };
 
     set = (value) =>
       this.state[name] !== value
         ? (this.setState({ [name]: value }), true)
-        : false
+        : false;
 
     render = () =>
-      factory({ ...this.props, ...this.state, [setName]: this.set })
+      factory({ ...this.props, ...this.state, [setName]: this.set });
   }
-  return WithState
-}
+  return WithState;
+};
 
 export default R.compose(
   withState('feed', 'setFeed', null),
   withState('search', 'setSearch', ''),
   withState('searchData', 'setSearchData', null)
-)(App)
+)(App);

@@ -75,7 +75,7 @@
     "test": "node scripts/test.js --watchAll=false",
     "test:watch": "node scripts/test.js --watchAll",
     "test:update-snapshot": "jest --watchAll=false --updateSnapshot",
-    "eslint": "eslint . --debug --ext .js,.jsx",
+    "eslint": "eslint . --ext .js,.jsx",
     "eslint:fix": "eslint --fix . --ext .js,.jsx"
   },
   "browserslist": {
