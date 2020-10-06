@@ -33,11 +33,7 @@ const App = ({
               type="text"
               value={search}
               placeholder="Melbourne"
-              onChange={R.compose(
-                setSearch,
-                R.prop('value'),
-                R.prop('target')
-              )}
+              onChange={R.compose(setSearch, R.prop('value'), R.prop('target'))}
               className="br1 br--top br--left ba b--light-gray ph3 pv2 flex-grow-1 flex-shrink-1"
             />
             <button
