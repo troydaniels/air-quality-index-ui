@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import * as R from 'ramda';
-import { useAppState } from '../../state'
+import { useAppState } from '../../state';
+import apiServices from '../../api/apiServices';
 import 'tachyons';
 
 const AirQualityApp = () => {
@@ -11,7 +12,8 @@ const AirQualityApp = () => {
     setFeed,
     setSearch,
     searchData,
-    setSearchData} = useAppState();
+    setSearchData,
+  } = useAppState();
   return (
     <div className="flex flex-column">
       <header className="f2 pv3 ph4 bg-light-purple white flex-grow-0 flex-shrink-0">
@@ -23,10 +25,9 @@ const AirQualityApp = () => {
             className="flex"
             onSubmit={(event) => {
               event.preventDefault();
-              fetch(
-                `http://api.waqi.info/search/?keyword=${search}&token=8d8e978e647d2b0a8c17c04ba331c0117cd06dc8`
-              )
-                .then(R.invoker(0, 'json'))
+              apiServices
+                .getSearchByName(search)
+                .then(R.prop('data'))
                 .then(R.prop('data'))
                 .then(setSearchData);
             }}
@@ -60,10 +61,9 @@ const AirQualityApp = () => {
                   <button
                     className="pv2 ph3 flex-grow-0 flex-shrink-0 b-white ba-0 b--white tl w-100 border-box"
                     onClick={() =>
-                      fetch(
-                        `http://api.waqi.info/feed/${name}/?token=8d8e978e647d2b0a8c17c04ba331c0117cd06dc8`
-                      )
-                        .then(R.invoker(0, 'json'))
+                      apiServices
+                        .getCityStationFeed(name)
+                        .then(R.prop('data'))
                         .then(R.prop('data'))
                         .then(setFeed)
                     }

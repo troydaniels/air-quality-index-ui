@@ -21,7 +21,7 @@ const AppStateProvider = ({
     searchData,
     setSearchData,
   };
-  console.log(feed);
+
   return (
     <StateContext.Provider value={{ ...contextValue }}>
       {children}
