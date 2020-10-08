@@ -8,8 +8,8 @@ const apiServices = {
     const url = `search/?keyword=${search}&token=${AQI_API_TOKEN}`;
     return httpClientAQI.get(url);
   },
-  getCityStationFeed: (name) => {
-    const url = `feed/${name}/?token=${AQI_API_TOKEN}`;
+  getStationFeedByUID: (uid) => {
+    const url = `feed/@${uid}/?token=${AQI_API_TOKEN}`;
     return httpClientAQI.get(url);
   },
 };

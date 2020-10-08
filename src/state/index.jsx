@@ -5,21 +5,25 @@ import * as R from 'ramda';
 export const StateContext = createContext(null);
 
 const AppStateProvider = ({
-  feed,
-  search,
-  setFeed,
-  setSearch,
-  searchData,
-  setSearchData,
+  error,
+  setError,
+  selection,
+  searchTerm,
+  setSelection,
+  searchResults,
+  setSearchTerm,
+  setSearchResults,
   children,
 }) => {
   const contextValue = {
-    feed,
-    search,
-    setFeed,
-    setSearch,
-    searchData,
-    setSearchData,
+    error,
+    setError,
+    selection,
+    searchTerm,
+    setSelection,
+    searchResults,
+    setSearchTerm,
+    setSearchResults,
   };
 
   return (
@@ -55,7 +59,8 @@ const withState = (name, setName, initialState) => (Component) => {
 };
 
 export default R.compose(
-  withState('feed', 'setFeed', null),
-  withState('search', 'setSearch', ''),
-  withState('searchData', 'setSearchData', null)
+  withState('error', 'setError', null),
+  withState('selection', 'setSelection', null),
+  withState('searchResults', 'setSearchResults', null),
+  withState('searchTerm', 'setSearchTerm', '')
 )(AppStateProvider);

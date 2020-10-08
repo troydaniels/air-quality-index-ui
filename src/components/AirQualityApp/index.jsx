@@ -1,97 +1,35 @@
 /* eslint-disable */
 import React from 'react';
-import * as R from 'ramda';
 import { useAppState } from '../../state';
-import apiServices from '../../api/apiServices';
+import Header from '../Header';
+import StationsList from '../StationsList';
 import 'tachyons';
 
 const AirQualityApp = () => {
-  const {
-    feed,
-    search,
-    setFeed,
-    setSearch,
-    searchData,
-    setSearchData,
-  } = useAppState();
+  const { selection } = useAppState();
+
   return (
-    <div className="flex flex-column">
-      <header className="f2 pv3 ph4 bg-light-purple white flex-grow-0 flex-shrink-0">
-        Air Quality Index
-      </header>
-      <div className="pa5 flex-grow-1 flex-shrink-0 flex items-start">
-        <div>
-          <form
-            className="flex"
-            onSubmit={(event) => {
-              event.preventDefault();
-              apiServices
-                .getSearchByName(search)
-                .then(R.prop('data'))
-                .then(R.prop('data'))
-                .then(setSearchData);
-            }}
-          >
-            <div className="w5 flex items-center">
-              <input
-                type="text"
-                value={search}
-                placeholder="Melbourne"
-                onChange={R.compose(
-                  setSearch,
-                  R.prop('value'),
-                  R.prop('target')
-                )}
-                className="br1 br--top br--left ba b--light-gray ph3 pv2 flex-grow-1 flex-shrink-1"
-              />
-              <button
-                type="submit"
-                className="br1 bl-0 br--top br--right b--light-gray white pa2 right-0 flex-grow-0 flex-shrink-0"
-              >
-                <span role="img" aria-label="search">
-                  🕵️
-                </span>
-              </button>
-            </div>
-          </form>
-          <div className="br1 br--bottom flex flex-column w5 bb bl br b--light-gray border-box">
-            {searchData ? (
-              <div className="pv2">
-                {searchData.map(({ station: { name } }) => (
-                  <button
-                    className="pv2 ph3 flex-grow-0 flex-shrink-0 b-white ba-0 b--white tl w-100 border-box"
-                    onClick={() =>
-                      apiServices
-                        .getCityStationFeed(name)
-                        .then(R.prop('data'))
-                        .then(R.prop('data'))
-                        .then(setFeed)
-                    }
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="ph3 pv2 silver h4 flex items-center justify-center">
-                Search for a city
-              </div>
-            )}
+    <div className="flex flex-column flex-grow">
+      <Header />
+      <div className="pa3 flex-grow-1 flex-shrink-0 flex items-start">
+        <>
+          <div className="flex flex-column w5">
+            <StationsList />
           </div>
-        </div>
-        {feed && (
+        </>
+        {selection && (
           <div className="ba b--light-gray br1 ml5" style={{ width: 512 }}>
             <div className="pv2 ph3 flex justify-between">
-              {feed.city.name}
+              {selection.city.name}
               <div>
-                ({feed.city.geo[0]}, {feed.city.geo[1]})
+                ({selection.city.geo[0]}, {selection.city.geo[1]})
               </div>
             </div>
             <div className="h4 pv2 ph3 flex justify-center items-center f1">
-              {feed.aqi}
+              {selection.aqi}
             </div>
             <div className="f7 pv2">
-              {feed.attributions.map(({ url, name }) => (
+              {selection.attributions.map(({ url, name }) => (
                 <div className="flex justify-between pv1 ph3">
                   <div>{name}</div>
                   <div className="blue pl3">{url}</div>
