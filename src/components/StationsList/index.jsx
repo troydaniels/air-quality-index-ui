@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { v4 as uuidv4 } from 'uuid';
 import { useAppState } from '../../state';
 import apiServices from '../../api/apiServices';
 
@@ -28,6 +29,7 @@ const StationsList = () => {
               .catch(() => setError(ERROR_FETCHING_FEED))
           }
           type="button"
+          key={uuidv4()}
         >
           {name}
         </button>

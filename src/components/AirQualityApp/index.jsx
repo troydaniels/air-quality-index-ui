@@ -7,16 +7,14 @@ import 'tachyons';
 
 const AirQualityApp = () => {
   const { selection } = useAppState();
-
+  console.log(selection);
   return (
     <div className="flex flex-column flex-grow">
       <Header />
       <div className="pa3 flex-grow-1 flex-shrink-0 flex items-start">
-        <>
-          <div className="flex flex-column w5">
-            <StationsList />
-          </div>
-        </>
+        <div className="flex flex-column w5">
+          <StationsList />
+        </div>
         {selection && (
           <div className="ba b--light-gray br1 ml5" style={{ width: 512 }}>
             <div className="pv2 ph3 flex justify-between">
