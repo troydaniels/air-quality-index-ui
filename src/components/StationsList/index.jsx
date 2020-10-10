@@ -10,34 +10,34 @@ const ERROR_FETCHING_FEED =
 const StationsList = () => {
   const { setError, searchResults, setSelection } = useAppState();
 
-  return searchResults ? (
-    <>
-      {searchResults.map(({ uid, station: { name } }) => (
-        <button
-          className="pv2 ph3 mb1 flex-grow-0 flex-shrink-0 ba b--solid b--light-gray tl w-100 border-box"
-          onClick={() =>
-            apiServices
-              .getStationFeedByUID(uid)
-              .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
-              .then(
-                R.ifElse(
-                  R.propEq('status', 'error'),
-                  R.compose(setError, R.prop('data')),
-                  R.compose(setSelection, R.prop('data'))
+  return (
+    <div className="flex flex-column w5 ml3">
+      {searchResults ? (
+        searchResults.map(({ uid, station: { name } }) => (
+          <button
+            className="pv2 ph3 mb1 flex-grow-0 flex-shrink-0 ba b--solid b--light-gray tl w-100 border-box"
+            onClick={() =>
+              apiServices
+                .getStationFeedByUID(uid)
+                .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
+                .then(
+                  R.ifElse(
+                    R.propEq('status', 'error'),
+                    R.compose(setError, R.prop('data')),
+                    R.compose(setSelection, R.prop('data'))
+                  )
                 )
-              )
-              .catch(() => setError(ERROR_FETCHING_FEED))
-          }
-          type="button"
-          key={uuidv4()}
-        >
-          {name}
-        </button>
-      ))}
-    </>
-  ) : (
-    <div className="ph3 pv2 black h4 flex items-center justify-center">
-      Info to go here
+                .catch(() => setError(ERROR_FETCHING_FEED))
+            }
+            type="button"
+            key={uuidv4()}
+          >
+            {name}
+          </button>
+        ))
+      ) : (
+        <>Info</>
+      )}
     </div>
   );
 };

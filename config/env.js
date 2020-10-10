@@ -76,6 +76,7 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
         AQI_API_TOKEN: process.env.AQI_API_TOKEN,
+        MAPBOX_API_TOKEN: process.env.MAPBOX_API_TOKEN,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

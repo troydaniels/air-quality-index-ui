@@ -20,7 +20,7 @@ const SearchBar = () => {
       onSubmit={(event) => {
         event.preventDefault();
         apiServices
-          .getSearchByName(searchTerm)
+          .getStationsByName(searchTerm)
           // Despite the API documentation, it seems the error message is returned as the `data` value
           .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
           .then(

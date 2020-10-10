@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import AppStateProvider from './state';
 import AirQualityApp from './components/AirQualityApp';
+import 'tachyons';
 import './index.css';
 
 ReactDOM.render(

@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { createContext, useContext } from 'react';
 import * as R from 'ramda';
+import useMap from '../hooks/useMap'
+import useAQIValues from '../hooks/useAQIValues'
 
 export const StateContext = createContext(null);
 
@@ -15,9 +17,16 @@ const AppStateProvider = ({
   setSearchResults,
   children,
 }) => {
+  // Get our AQI values for display in the StationData component
+  const aqiValues = useAQIValues(selection);
+
+  // Initialise our station map
+  useMap(selection);
+
   const contextValue = {
     error,
     setError,
+    aqiValues,
     selection,
     searchTerm,
     setSelection,

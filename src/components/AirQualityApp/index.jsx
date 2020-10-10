@@ -1,41 +1,38 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
+import * as R from 'ramda';
 import { useAppState } from '../../state';
 import Header from '../Header';
 import StationsList from '../StationsList';
-import 'tachyons';
+import StationData from '../StationData';
+import apiServices from '../../api/apiServices';
+
+const ERROR_FETCHING_LOCAL_FEED = 'There was an error retrieving details from your local Air Quality station. Please check your network connection and refresh the page.'
 
 const AirQualityApp = () => {
-  const { selection } = useAppState();
-  console.log(selection);
+  const { setError, setSelection } = useAppState();
+
+  // On load, fetch details from the local Air Quality station, based on the user's IP
+  useEffect(() => {
+    apiServices
+      .getStationFeedByIPAddress()
+      .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
+      .then(
+        R.ifElse(
+          R.propEq('status', 'error'),
+          R.compose(setError, R.prop('data')),
+          R.compose(setSelection, R.prop('data'))
+        )
+      )
+      .catch(() => setError(ERROR_FETCHING_LOCAL_FEED));
+  }, []);
+
   return (
     <div className="flex flex-column flex-grow">
       <Header />
       <div className="pa3 flex-grow-1 flex-shrink-0 flex items-start">
-        <div className="flex flex-column w5">
-          <StationsList />
-        </div>
-        {selection && (
-          <div className="ba b--light-gray br1 ml5" style={{ width: 512 }}>
-            <div className="pv2 ph3 flex justify-between">
-              {selection.city.name}
-              <div>
-                ({selection.city.geo[0]}, {selection.city.geo[1]})
-              </div>
-            </div>
-            <div className="h4 pv2 ph3 flex justify-center items-center f1">
-              {selection.aqi}
-            </div>
-            <div className="f7 pv2">
-              {selection.attributions.map(({ url, name }) => (
-                <div className="flex justify-between pv1 ph3">
-                  <div>{name}</div>
-                  <div className="blue pl3">{url}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <StationsList />
+        <StationData />
       </div>
     </div>
   );
