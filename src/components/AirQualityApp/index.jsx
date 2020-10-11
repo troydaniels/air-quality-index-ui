@@ -11,7 +11,14 @@ const ERROR_FETCHING_LOCAL_FEED =
   'There was an error retrieving details from your local Air Quality station. Please check your network connection and refresh the page.';
 
 const AirQualityApp = () => {
-  const { setError, setSelection } = useAppState();
+  const { setError, setSelection, selection } = useAppState();
+
+  useEffect(() => {
+    // Scroll to top when a new station is selected
+    if(selection) {
+      window.scroll(0, 0);
+    }
+  }, [selection]);
 
   // On load, fetch details from the local Air Quality station, based on the user's IP
   useEffect(() => {
