@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React, { createContext, useContext } from 'react';
 import * as R from 'ramda';
-import useMap from '../hooks/useMap'
-import useAQIValues from '../hooks/useAQIValues'
+import useMap from '../hooks/useMap';
+import useAQIValues from '../hooks/useAQIValues';
 
-export const StateContext = createContext(null);
+export const StateContext = createContext(undefined);
 
 const AppStateProvider = ({
   error,
