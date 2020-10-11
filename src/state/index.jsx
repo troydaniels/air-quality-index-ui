@@ -1,4 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { createContext, useContext } from 'react';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import useMap from '../hooks/useMap';
 import useAQIValues from '../hooks/useAQIValues';
@@ -52,7 +54,10 @@ export const useAppState = () => {
 const withState = (name, setName, initialState) => (Component) => {
   const factory = React.createFactory(Component);
   class WithState extends React.Component {
-    state = { [name]: initialState };
+    constructor(props) {
+      super(props);
+      this.state = { [name]: initialState };
+    }
 
     set = (value) =>
       this.state[name] !== value
@@ -64,6 +69,25 @@ const withState = (name, setName, initialState) => (Component) => {
   }
 
   return WithState;
+};
+
+AppStateProvider.propTypes = {
+  setError: PropTypes.instanceOf(Function).isRequired,
+  setSelection: PropTypes.instanceOf(Function).isRequired,
+  setSearchResults: PropTypes.instanceOf(Function).isRequired,
+  setSearchTerm: PropTypes.instanceOf(Function).isRequired,
+  children: PropTypes.instanceOf(Object).isRequired,
+  selection: PropTypes.instanceOf(Object),
+  searchResults: PropTypes.instanceOf(Object),
+  error: PropTypes.string,
+  searchTerm: PropTypes.string,
+};
+
+AppStateProvider.defaultProps = {
+  selection: null,
+  searchResults: null,
+  error: null,
+  searchTerm: '',
 };
 
 export default R.compose(
