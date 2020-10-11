@@ -17,6 +17,7 @@ const StationsList = () => {
       .then(
         R.ifElse(
           R.propEq('status', 'error'),
+          // In  case of an error, the error message is returned as the `data` value
           R.compose(setError, R.prop('data')),
           R.compose(setSelection, R.prop('data'))
         )
@@ -25,6 +26,7 @@ const StationsList = () => {
   };
 
   useEffect(() => {
+    // If we only have a single search result returned, lets be helpful and select that one for them
     if (searchResults?.length === 1) {
       handleStationSelect(searchResults[0].uid);
     }
@@ -47,7 +49,7 @@ const StationsList = () => {
           </div>
         </div>
       )}
-      {/* No stations found */}
+      {/* No search results */}
       {searchResults && !searchResults.length && (
         <div className="flex flex-column items-start-l center tc">
           <div className="fw6 f5 mb2 bg-light-gray w-100">NO RESULTS FOUND</div>
@@ -56,7 +58,7 @@ const StationsList = () => {
           </div>
         </div>
       )}
-      {/* Several results */}
+      {/* Several search results */}
       {!!searchResults?.length &&
         searchResults.map(({ uid, station: { name } }) => (
           <button
@@ -71,6 +73,7 @@ const StationsList = () => {
             type="button"
             key={uid}
           >
+            {/* The name key can contain several concatenated names */}
             {name.split(';')[0]}
           </button>
         ))}

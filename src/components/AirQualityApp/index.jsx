@@ -1,10 +1,10 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
 import * as R from 'ramda';
 import { useAppState } from '../../state';
 import Header from '../Header';
 import StationsList from '../StationsList';
 import StationData from '../StationData';
+import Footer from '../Footer';
 import apiServices from '../../api/apiServices';
 
 const ERROR_FETCHING_LOCAL_FEED =
@@ -15,7 +15,7 @@ const AirQualityApp = () => {
 
   useEffect(() => {
     // Scroll to top when a new station is selected
-    if(selection) {
+    if (selection) {
       window.scroll(0, 0);
     }
   }, [selection]);
@@ -28,6 +28,7 @@ const AirQualityApp = () => {
       .then(
         R.ifElse(
           R.propEq('status', 'error'),
+          // In  case of an error, the error message is returned as the `data` value
           R.compose(setError, R.prop('data')),
           R.compose(setSelection, R.prop('data'))
         )
@@ -42,31 +43,7 @@ const AirQualityApp = () => {
         <StationsList />
         <StationData />
       </div>
-      <div className="f7 mv3 tc">
-        <div>
-          Map data provided by{' '}
-          <a
-            href="https://github.com/mapbox"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Mapbox.
-          </a>
-        </div>
-        <div>
-          Air quality data provided by the{' '}
-          <a
-            href="https://waqi.info/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            World Air Quality Index project.
-          </a>
-        </div>
-        <div>
-          All data on this website is approximate and has not been verified.
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

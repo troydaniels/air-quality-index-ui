@@ -8,6 +8,7 @@ const ErrorMessage = () => {
   const { error, setError } = useAppState();
 
   useEffect(() => {
+    // When we get a new error, display it for ERROR_DURATION ms
     if (error) {
       setTimeout(() => {
         setError(null);
