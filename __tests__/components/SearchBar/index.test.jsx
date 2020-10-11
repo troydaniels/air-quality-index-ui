@@ -4,6 +4,7 @@ import axios from 'axios';
 import SearchBar from '../../../src/components/SearchBar';
 import AppStateProvider from '../../../src/state';
 
+// Remove missing prop errors from test output
 beforeAll(() => {
   jest.spyOn(console, 'error').mockImplementation(() => {});
 });

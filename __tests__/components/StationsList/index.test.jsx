@@ -4,6 +4,7 @@ import axios from 'axios';
 import StationsList from '../../../src/components/StationsList';
 import { useAppState } from '../../../src/state';
 
+// Remove missing prop errors from test output
 beforeAll(() => {
   jest.spyOn(console, 'error').mockImplementation(() => {});
 });
@@ -42,14 +43,20 @@ describe('The StationsList component', () => {
   });
 
   it('renders a list of buttons, when results are returned from search, with background of "bg-lightest-blue" prior to selection', () => {
-    mockUseAppState.mockImplementationOnce(() => ({ searchResults: [{uid: '12345', station: { name: 'test'}}], selection: {idx: '67890'} }));
+    mockUseAppState.mockImplementationOnce(() => ({
+      searchResults: [{ uid: '12345', station: { name: 'test' } }],
+      selection: { idx: '67890' },
+    }));
     const wrapper = shallow(<StationsList />);
     expect(wrapper.find('button').length).toEqual(1);
     expect(wrapper.find('button').hasClass('bg-lightest-blue')).toBe(true);
   });
 
   it('on selection, changes background color of button to "bg-light-blue"', () => {
-    mockUseAppState.mockImplementationOnce(() => ({ searchResults: [{uid: '12345', station: { name: 'test'}}], selection: {idx: '12345'} }));
+    mockUseAppState.mockImplementationOnce(() => ({
+      searchResults: [{ uid: '12345', station: { name: 'test' } }],
+      selection: { idx: '12345' },
+    }));
     const wrapper = shallow(<StationsList />);
     expect(wrapper.find('button').length).toEqual(1);
     expect(wrapper.find('button').hasClass('bg-light-blue')).toBe(true);
@@ -62,7 +69,10 @@ describe('The StationsList component', () => {
       }),
     };
 
-    mockUseAppState.mockImplementationOnce(() => ({ searchResults: [{uid: '12345', station: { name: 'test'}}], selection: {idx: '67890'} }));
+    mockUseAppState.mockImplementationOnce(() => ({
+      searchResults: [{ uid: '12345', station: { name: 'test' } }],
+      selection: { idx: '67890' },
+    }));
     const wrapper = shallow(<StationsList {...props} />);
     wrapper.find('button').simulate('click');
     expect(props.getStationFeedByUID).toHaveBeenCalled();

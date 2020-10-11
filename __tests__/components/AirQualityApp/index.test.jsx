@@ -4,6 +4,7 @@ import axios from 'axios';
 import AirQualityApp from '../../../src/components/AirQualityApp';
 import AppStateProvider from '../../../src/state';
 
+// Remove missing prop errors from test output
 beforeAll(() => {
   jest.spyOn(console, 'error').mockImplementation(() => {});
 });
@@ -24,6 +25,7 @@ describe('The AirQualityApp component', () => {
   };
 
   beforeEach(() => {
+    // Call mockUseEffect on component 'mount'
     mockUseEffect();
   });
 
