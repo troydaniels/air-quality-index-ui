@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as R from 'ramda';
 import classnames from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
 import { useAppState } from '../../state';
 import apiServices from '../../api/apiServices';
 
@@ -10,9 +9,32 @@ const ERROR_FETCHING_FEED =
 
 const StationsList = () => {
   const { setError, searchResults, setSelection, selection } = useAppState();
-  console.log(searchResults);
+
+  const selectStation = (uid) => {
+    apiServices
+      .getStationFeedByUID(uid)
+      .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
+      .then(
+        R.ifElse(
+          R.propEq('status', 'error'),
+          R.compose(setError, R.prop('data')),
+          R.compose(setSelection, R.prop('data'))
+        )
+      )
+      .catch(() => setError(ERROR_FETCHING_FEED));
+  };
+
+  useEffect(() => {
+    if (searchResults?.length === 1) {
+      selectStation(searchResults[0].uid);
+    }
+  }, [searchResults]);
+
   return (
-    <div className="flex flex-column-l flex-row w5-l w-100 ml3-l overflow-x-visible-l overflow-x-scroll">
+    <div
+      className="flex flex-column-l flex-row w5-l w-100 ml3-l mv0-l mb2 h-100-l overflow-x-visible-l overflow-x-scroll"
+      style={{ minHeight: '70px' }}
+    >
       {searchResults ? (
         searchResults.map(({ uid, station: { name } }) => (
           <button
@@ -23,21 +45,9 @@ const StationsList = () => {
                 'bg-light-blue': uid === selection.idx,
               }
             )}
-            onClick={() =>
-              apiServices
-                .getStationFeedByUID(uid)
-                .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
-                .then(
-                  R.ifElse(
-                    R.propEq('status', 'error'),
-                    R.compose(setError, R.prop('data')),
-                    R.compose(setSelection, R.prop('data'))
-                  )
-                )
-                .catch(() => setError(ERROR_FETCHING_FEED))
-            }
+            onClick={() => selectStation(uid)}
             type="button"
-            key={uuidv4()}
+            key={uid}
           >
             {name.split(';')[0]}
           </button>
