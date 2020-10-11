@@ -35,7 +35,29 @@ const StationsList = () => {
       className="flex flex-column-l flex-row w5-l w-100 ml3-l mv0-l mb2 h-100-l overflow-x-visible-l overflow-x-scroll"
       style={{ minHeight: '70px' }}
     >
-      {searchResults ? (
+      {/* On app mount */}
+      {!searchResults && (
+        <div className="flex flex-column tl-l tc pa2 bg-light-gray">
+          <div>
+            Air quality information & map on screen is from the nearest air
+            quality station to you, based on your device&#39;s IP address.
+          </div>
+          <div className="mt3 fw6">
+            Explore air quality at other locations by searching above.
+          </div>
+        </div>
+      )}
+      {/* No stations found */}
+      {searchResults && !searchResults.length && (
+        <div className="flex flex-column items-start-l center tc">
+          <div className="fw6 f5 mb2 bg-light-gray w-100">NO RESULTS FOUND</div>
+          <div className="fw3 tl-l">
+            Please enter another city or station name and search again.
+          </div>
+        </div>
+      )}
+      {/* Several results */}
+      {!!searchResults?.length &&
         searchResults.map(({ uid, station: { name } }) => (
           <button
             className={classnames(
@@ -51,18 +73,7 @@ const StationsList = () => {
           >
             {name.split(';')[0]}
           </button>
-        ))
-      ) : (
-        <>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </>
-      )}
+        ))}
     </div>
   );
 };

@@ -59,7 +59,7 @@ const StationData = () => {
           <div className="f7 pv2">
             {selection.attributions.map(({ url, name }) => (
               <div className="flex justify-between pv1" key={uuidv4()}>
-                <a href={url} target="_blank">{name}</a>
+                <a href={url} target="_blank" rel="noopener noreferrer">{name}</a>
               </div>
             ))}
           </div>
