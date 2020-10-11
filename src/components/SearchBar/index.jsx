@@ -16,16 +16,16 @@ const SearchBar = () => {
 
   return (
     <form
-      className="flex flex-row ba b--solid pa2"
+      className="flex flex-row ba-ns b--solid-ns b--white pa2"
       onSubmit={(event) => {
         event.preventDefault();
         apiServices
           .getStationsByName(searchTerm)
-          // Despite the API documentation, it seems the error message is returned as the `data` value
           .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
           .then(
             R.ifElse(
               R.propEq('status', 'error'),
+              // In  case of an error, the error message is returned as the `data` value
               R.compose(setError, R.prop('data')),
               R.compose(setSearchResults, R.prop('data'))
             )
@@ -36,11 +36,16 @@ const SearchBar = () => {
       <input
         type="text"
         value={searchTerm}
-        placeholder="Enter a station name"
+        placeholder="City/station name"
         onChange={R.compose(setSearchTerm, R.prop('value'), R.prop('target'))}
-        className="w5 mr1"
+        className="w5-ns w-100 mr1"
       />
-      <button type="submit">Search</button>
+      <button
+        className="f6 link dim ph3 pv2 dib white bg-blue b--white"
+        type="submit"
+      >
+        Search
+      </button>
     </form>
   );
 };

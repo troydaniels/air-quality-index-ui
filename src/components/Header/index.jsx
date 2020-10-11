@@ -4,12 +4,12 @@ import ErrorMessage from '../ErrorMessage';
 
 const Header = () => {
   return (
-    <div className="flex flex-column f4 pt1 pb3 ph4 bg-light-blue white">
-      <div className="flex flex-row">
-        <div className="mb2">Air Quality Index</div>
-        <ErrorMessage />
+    <div className="flex flex-column f4 pt1 pb3 ph4-ns ph1 bg-light-blue">
+      <ErrorMessage />
+      <div className="mw8 w-100 flex flex-column center">
+        <div className="mb2 f3 fw4 mh0-ns center">Air Quality Index Search</div>
+        <SearchBar />
       </div>
-      <SearchBar />
     </div>
   );
 };

@@ -12,15 +12,12 @@ const StationsList = () => {
   const { setError, searchResults, setSelection, selection } = useAppState();
   console.log(searchResults);
   return (
-    <div
-      className="flex flex-column w5 ml3 overflow-y-auto"
-      style={{ height: '30rem' }}
-    >
+    <div className="flex flex-column-l flex-row w5-l w-100 ml3-l overflow-x-visible-l overflow-x-scroll">
       {searchResults ? (
         searchResults.map(({ uid, station: { name } }) => (
           <button
             className={classnames(
-              'pv2 ph3 mb1 flex-grow-0 flex-shrink-0 ba b--solid b--gray tl w-100 border-box',
+              'pv2-l ph3-l pa1 ml0-l mr2 mv1 flex-grow-0 flex-shrink-0 ba b--solid b--gray border-box tl-l tc w5-l w4',
               {
                 'bg-lightest-blue': uid !== selection.idx,
                 'bg-light-blue': uid === selection.idx,
@@ -46,7 +43,15 @@ const StationsList = () => {
           </button>
         ))
       ) : (
-        <>Info</>
+        <>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </>
       )}
     </div>
   );

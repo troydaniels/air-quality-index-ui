@@ -7,7 +7,8 @@ import StationsList from '../StationsList';
 import StationData from '../StationData';
 import apiServices from '../../api/apiServices';
 
-const ERROR_FETCHING_LOCAL_FEED = 'There was an error retrieving details from your local Air Quality station. Please check your network connection and refresh the page.'
+const ERROR_FETCHING_LOCAL_FEED =
+  'There was an error retrieving details from your local Air Quality station. Please check your network connection and refresh the page.';
 
 const AirQualityApp = () => {
   const { setError, setSelection } = useAppState();
@@ -28,9 +29,9 @@ const AirQualityApp = () => {
   }, []);
 
   return (
-    <div className="flex flex-column flex-grow">
+    <div className="flex flex-column flex-grow near-black">
       <Header />
-      <div className="pa3 flex-grow-1 flex-shrink-0 flex items-start">
+      <div className="pa3 flex-grow-1 flex-shrink-0 flex flex-row-l flex-column center mw8 w-100">
         <StationsList />
         <StationData />
       </div>
