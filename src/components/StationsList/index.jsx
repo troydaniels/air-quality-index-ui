@@ -10,7 +10,7 @@ const ERROR_FETCHING_FEED =
 const StationsList = () => {
   const { setError, searchResults, setSelection, selection } = useAppState();
 
-  const selectStation = (uid) => {
+  const handleStationSelect = (uid) => {
     apiServices
       .getStationFeedByUID(uid)
       .then(R.compose(R.pickAll(['status', 'data']), R.prop('data')))
@@ -26,7 +26,7 @@ const StationsList = () => {
 
   useEffect(() => {
     if (searchResults?.length === 1) {
-      selectStation(searchResults[0].uid);
+      handleStationSelect(searchResults[0].uid);
     }
   }, [searchResults]);
 
@@ -45,7 +45,7 @@ const StationsList = () => {
                 'bg-light-blue': uid === selection.idx,
               }
             )}
-            onClick={() => selectStation(uid)}
+            onClick={() => handleStationSelect(uid)}
             type="button"
             key={uid}
           >
